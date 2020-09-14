@@ -33,7 +33,7 @@ As imagens de satelite, como dito anteriormente, possuem vários canais e captur
 | aTIRS 1 – Band 10  | 10.6–11.19     |
 | TIRS 2 – Band 11   | 11.5–12.51     |
 
-[Entretanto, outras consifurações são possíveis. Os satélites LANDSAT 5 e 7, utilizados pelo INPE, por exemplo, possuem apenas 7 bandas. ](http://www.dgi.inpe.br/Suporte/files/Cameras-LANDSAT57_PT.php)
+[Entretanto, outras configurações são possíveis. Os satélites LANDSAT 5 e 7, utilizados pelo INPE, por exemplo, possuem apenas 7 bandas. ](http://www.dgi.inpe.br/Suporte/files/Cameras-LANDSAT57_PT.php)
 
 
 ## Superfícies de reflectância
