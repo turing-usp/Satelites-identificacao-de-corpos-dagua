@@ -1,0 +1,8 @@
+pandas
+numpy
+PyWavelets
+scikit-image
+scikit-learn
+scipy
+opencv-python
+jupyterlab
