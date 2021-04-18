@@ -26,14 +26,37 @@ def _get_locations_dataframe(url: str = _LOCATIONS_URL,
 
 
 class RegionGetterImages():
+    """
+    Classe que manipula e faz download das imagens.
+    """
 
     def __init__(self, lat: float, lon: float, region_name: str) -> None:
+        """
+        Construtor de uma instância da classe.
+
+        Args:
+            lat (float): latitude de interesse
+            lon (float): longitude de interesse
+            region_name (str): nome da região de interesse
+        """
         self.lat = lat
         self.lon = lon
         self.region_name = region_name
 
     def is_in_square(self, max_lon: float, max_lat: float,
                      min_lon: float, min_lat: float) -> bool:
+        """
+        Verifica se lat e lon estão dentro de um determinado retângulo.
+
+        Args:
+            max_lon (float): longitude máxima
+            max_lat (float): latitude máxima
+            min_lon (float): longitude mínima
+            min_lat (float): latitude mínima
+
+        Returns:
+            Retorna True se lat e lon estão contidos. False caso o contrário.
+        """
         in_square = False
         if min_lat <= self.lat <= max_lat:
             if min_lon <= self.lon <= max_lon:
@@ -41,6 +64,16 @@ class RegionGetterImages():
         return in_square
 
     def find_coord_datasets(self, scene_list: pd.DataFrame) -> pd.DataFrame:
+        """
+        A partir da lista de cenas retorna as informações da região para a
+        latitude e longitude passadas na criação da classe.
+
+        Args:
+            scene_list (pd.DataFrame): lista de cenas com as informações
+
+        Returns:
+            pd.DataFrame da região para lat e lon.
+        """
         filter_df = scene_list.apply(
             lambda row: self.is_in_square(
                 row['max_lon'],
@@ -52,7 +85,17 @@ class RegionGetterImages():
     
     def get_bands_images(self, path: str, row: int, product_id: str, region: str,
                         bands: List[str], outputbasepath: str) -> None:
+        """
+        Com base nas informações da região faz o download das imagens.
 
+        Args:
+            path (str): caminho para a requisição
+            row (int): row para a requisição
+            product_id (str): Id do produto para a requisição
+            region (str): nome da região
+            bands (List[str]): lista de bandas de interesse
+            outputbasepath (str): caminho base onde as imagens serão salvas
+        """
         out_path = Path(f'{outputbasepath}/{region}/{product_id}')
         out_path.mkdir(parents=True, exist_ok=True)
         
@@ -73,6 +116,15 @@ class RegionGetterImages():
         scene_list: pd.DataFrame,
         bands: List[str] = ['thumb_small.jpg','B3.TIF','B5.TIF'],
         outputbasepath = 'images') -> None:
+        """
+        Função principal que chamas as demais para fazer download das imagens
+
+        Args:
+            scene_list (pd.DataFrame): lista de cenas para achar informações
+            da região
+            bands (List[str], optional): bandas de interesse
+            outputbasepath (str, optional): caminho base para salvar as imagens
+        """
         start = time.time()
         print(f"[INFO] Encontrando região para os pontos passados...")
         region_data = self.find_coord_datasets(scene_list)
@@ -94,6 +146,9 @@ class RegionGetterImages():
 
 
 if __name__ == "__main__":
+    """
+    Função principal do programa.
+    """
     parser = argparse.ArgumentParser(
         description="Faz download das imagensdo s2 baseado na lat e lon"
     )
